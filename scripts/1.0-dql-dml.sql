@@ -1,0 +1,39 @@
+CREATE DATABASE CATALOGO;
+GO
+
+USE CATALOGO;
+GO
+
+CREATE TABLE GENERO (
+ idGenero TINYINT PRIMARY KEY IDENTITY(1,1),
+ nomeGenero VARCHAR(20)
+);
+GO
+
+--ALTER TABLE GENERO
+--DROP COLUMN nomeGenero
+
+ALTER TABLE GENERO
+ADD nomeGenero VARCHAR(20) NOT NULL
+
+
+CREATE TABLE FILME(
+ idFilme SMALLINT PRIMARY KEY IDENTITY(1,1),
+ idGenero TINYINT FOREIGN KEY REFERENCES GENERO(idGenero),
+ tituloFilme VARCHAR(50) NOT NULL
+ );
+ GO
+
+ INSERT INTO GENERO (nomeGenero)
+ VALUES ('AÇÃO'),('ROMANCE');
+ GO
+
+
+ SELECT * FROM GENERO
+
+ INSERT INTO FILME (idGenero, tituloFilme)
+ VALUES (1,'Rambo'), (1, 'Vingadores'),
+ (2,'Romance'), (2,'Diario de uma paixão');
+ GO
+
+ SELECT * FROM FILME

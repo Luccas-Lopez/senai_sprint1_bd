@@ -7,25 +7,61 @@ GO
 
 SELECT * FROM ARTISTA
 
-
 INSERT INTO ESTILO(nomeEstilo)
 VALUES ('POP'), ('INDIE'), ('ROCK');
 GO
 
 SELECT * FROM ESTILO
 
-INSERT INTO ALBUM(idArtista, idEstilo, nomeAlbum)
-VALUES (1, 1, 'ALIVE'), (2, 3, 'BREEZEBLOCKS');
+
+INSERT INTO ALBUM(idArtista, nomeAlbum, dataLanc, ativo)
+VALUES (1, 'ALIVE', '11/08/2019', 0), (2, 'BREEZEBLOCKS', '06/03/2018', 1);
 GO
 
 SELECT * FROM ALBUM
 
-INSERT INTO USUARIO(nomeUsuario)
-VALUES ('LUCAS'), ('SAULO'), ('ANA');
+
+INSERT INTO ESTILOALBUM
+VALUES (1, 1), (2,2), (2,3);
+GO
+
+SELECT * FROM ESTILOALBUM
+
+INSERT INTO USUARIO(nomeUsuario, email, senha, permissao)
+VALUES ('LUCAS', 'lucas@email.com', '1111111', 'COMUM'), 
+('SAULO', 'saulo@email.com', '2222222', 'ADM'), 
+('ANA', 'ana#email.com', '555555555', 'ADM');
 GO
 
 SELECT * FROM USUARIO
 
 DELETE FROM USUARIO
 WHERE idUsuario = 1;
+GO
+
+
+SELECT USUARIO.nomeUsuario, USUARIO.email, USUARIO.permissao FROM USUARIO
+WHERE USUARIO.permissao LIKE 'ADM';
+GO
+
+
+SELECT ALBUM.nomeAlbum, ALBUM.dataLanc, ALBUM.ativo, ARTISTA.nomeArtista FROM ALBUM
+INNER JOIN ARTISTA
+ON ALBUM.idArtista = ARTISTA.idArtista
+WHERE ALBUM.dataLanc > '2010';
+GO
+
+SELECT USUARIO.nomeUsuario, USUARIO.email, USUARIO.permissao FROM USUARIO
+WHERE USUARIO.email LIKE 'ana#email.com' AND USUARIO.senha LIKE '555555555';
+GO
+
+
+SELECT ALBUM.nomeAlbum, ALBUM.dataLanc, ALBUM.ativo, ARTISTA.nomeArtista, ESTILO.nomeEstilo FROM ALBUM
+INNER JOIN ARTISTA
+ON ALBUM.idArtista = ARTISTA.idArtista
+INNER JOIN ESTILOALBUM
+ON ALBUM.idAlbum = ESTILOALBUM.idAlbum
+INNER JOIN ESTILO
+ON ESTILOALBUM.idEstilo = ESTILO.idEstilo
+WHERE ALBUM.ativo = 'true';
 GO
